@@ -1,0 +1,20 @@
+Source: ffconversor
+Section: utils
+Priority: optional
+Maintainer: M.Angel Juan <m.angel.juan@gmail.com>
+Build-Depends: debhelper-compat (= 12)
+Standards-Version: 4.4.1
+Homepage: https://github.com/lliurex/ffconversor
+
+Package: ffconversor
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3, ffmpeg, dialog
+Description: Multimedia converter tool
+ Convert between multimedia formats tool
+
+Package: ffconversor-kde-servicemenu
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ffconversor
+Description: Dolphin service menu for ffconversor
+ Service menu with multimedia conversion options
+
