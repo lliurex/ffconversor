@@ -1,0 +1,30 @@
+[Desktop Entry]
+Type=Service
+MimeType='video/x-ms-wvx;video/x-matroska;video/x-ms-wmx;video/3gpp;audio/x-ms-wax;video/annodex;video/MP2T;audio/mpegurl;video/x-ms-wm;video/x-sgi-movie;audio/x-ms-wma;video/x-ms-wmv;video/x-msvideo;audio/midi;video/mp4;audio/x-scpls;audio/annodex;video/vnd.mpegurl;video/x-mng;video/webm;video/fli;video/gl;audio/x-aiff;audio/x-gsm;video/quicktime;audio/csound;video/mpeg;audio/prs.sid;audio/amr-wb;video/dv;audio/x-pn-realaudio;audio/x-wav;video/ogg;audio/ogg;video/x-flv;audio/x-sd2;audio/flac;video/dl;video/x-ms-asf;audio/mpeg;audio/basic;video/x-la-asf;audio/amr';
+X-KDE-Submenu=Conversion
+X-KDE-Submenu[ca]=Conversió
+X-KDE-MinNumbersOfUrls=1
+X-KDE-MaxNumbersOfUrls=1
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+Actions=mp4;_SEPARATOR_;mp3;_SEPARATOR_;custom;
+
+[Desktop Action mp4]
+Name=Video MP4
+Name[es]=Vídeo MP4 h264
+Name[ca]=Vídeo MP4 h264
+Icon=kdenlive-show-video
+Exec=/usr/bin/ffconversor -i %U -g -f mp4;
+
+[Desktop Action mp3]
+Name=Audio MP3
+Name[es]=Audio MP3
+Name[ca]=Audio MP3
+Icon=kdenlive-show-audio
+Exec=/usr/bin/ffconversor -i %U -g -f mp3;
+
+[Desktop Action custom]
+Name=Custom Conversion
+Name[es]=Conversión Personalizada
+Name[ca]=Conversió Personalitzada
+Icon=kdenlive-split-audio
+Exec=/usr/bin/ffconversor -i %U -g;
