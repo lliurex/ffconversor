@@ -9,6 +9,7 @@ import socket
 import threading
 import time
 import signal
+import random
 
 def einfo(func):
     @wraps(func)
@@ -169,11 +170,17 @@ def cancel_text(*args,**kwargs):
 
 udpserver = None
 end_server = False
+port = random.randint(20000,65000)
 def start_listener(info,output):
+    global port
     if kdemode and kdemode != '0':
-        service, path = subprocess.check_output(['kdialog','--progressbar','Converting ... ', '100', '--title', sys.argv[0]]).decode().strip().split(' ')
+        service, path = subprocess.check_output(['kdialog','--progressbar',f'Converting ... {os.path.basename(output)}', '100', '--title', os.path.basename(sys.argv[0]])).decode().strip().split(' ')
     udpserver = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-    udpserver.bind(('127.0.0.1',60666))
+    try:
+        udpserver.bind(('127.0.0.1',port))
+    except:
+        port = random.randint(20000,65000)
+        udpserver.bind(('127.0.0.1',port))
     udpserver.setblocking(False)
     length = info.get('length')
     if length:
@@ -216,7 +223,7 @@ def start_listener(info,output):
         subprocess.check_call(['qdbus', service, path, 'close'])
 
 def call_ffmpeg(input,output,container,profile):
-    global end_server, ffmpeg
+    global end_server, ffmpeg, port
     info = parse_info(get_info(input))
 
     cmd=['/usr/bin/ffmpeg','-y','-v','quiet','-i',input]
@@ -247,7 +254,7 @@ def call_ffmpeg(input,output,container,profile):
         cmd.append(container)
 
     cmd.append('-progress')
-    cmd.append('udp://127.0.0.1:60666')
+    cmd.append(f'udp://127.0.0.1:{port}')
 
     cmd.append(output)
     print(' '.join(cmd))
@@ -263,7 +270,7 @@ def ask():
     cmd=[]
     formats = sorted(list(profiles.keys()) + list(profile_alias.keys()))
     if kdemode and kdemode != '0':
-        cmd = ['kdialog','--combobox','Desired format?']
+        cmd = ['kdialog','--combobox','Desired format?','--title',os.path.basename(sys.argv[0])]
         cmd.extend(formats)
         cmd.extend(['--title',sys.argv[0]])
     if textmode and textmode != '0':
