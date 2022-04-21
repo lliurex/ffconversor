@@ -174,7 +174,7 @@ port = random.randint(20000,65000)
 def start_listener(info,output):
     global port
     if kdemode and kdemode != '0':
-        service, path = subprocess.check_output(['kdialog','--progressbar',f'Converting ... {os.path.basename(output)}', '100', '--title', os.path.basename(sys.argv[0]])).decode().strip().split(' ')
+        service, path = subprocess.check_output(['kdialog','--progressbar',f'Converting ... {os.path.basename(output)}', '100', '--title', os.path.basename(sys.argv[0])]).decode().strip().split(' ')
     udpserver = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     try:
         udpserver.bind(('127.0.0.1',port))
@@ -272,7 +272,6 @@ def ask():
     if kdemode and kdemode != '0':
         cmd = ['kdialog','--combobox','Desired format?','--title',os.path.basename(sys.argv[0])]
         cmd.extend(formats)
-        cmd.extend(['--title',sys.argv[0]])
     if textmode and textmode != '0':
         cmd = ['dialog','--stdout','--menu','Desired format?','0','0','0']
         options = zip(formats,['']*len(formats))
