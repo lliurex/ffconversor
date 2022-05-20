@@ -7,15 +7,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-20 11:19+0200\n"
-"PO-Revision-Date: 2022-05-20 11:24+0200\n"
+"POT-Creation-Date: 2022-05-20 11:49+0200\n"
+"PO-Revision-Date: 2022-05-20 11:54+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "X-Generator: Poedit 2.3\n"
+
+#: ffconversor:109
+msgid "not exists"
+msgstr "no existe"
 
 #: ffconversor:122
 msgid "Format not valid, valid types are:"
@@ -25,9 +29,21 @@ msgstr "Formato no válido, los tipos válidos son:"
 msgid "Format not specified"
 msgstr "Formato no especificado"
 
+#: ffconversor:133
+msgid "Unknown parameter"
+msgstr "Parámetro desconocido"
+
+#: ffconversor:142
+msgid "not found"
+msgstr "no encontrado"
+
 #: ffconversor:170
 msgid "Fail parsing file information"
 msgstr "Fallo leyendo el fichero de información"
+
+#: ffconversor:188
+msgid "Converting"
+msgstr "Convirtiendo"
 
 #: ffconversor:284 ffconversor:287
 msgid "Desired format?"
@@ -43,4 +59,6 @@ msgstr "Fichero de entrada no especificado"
 
 #: ffconversor:363
 msgid "No format specified and not output file with valid extension"
-msgstr "No especificado formato y no especificado un fichero de salida con extensión válida"
+msgstr ""
+"No especificado formato y no especificado un fichero de salida con extensión "
+"válida"
