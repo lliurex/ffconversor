@@ -1,0 +1,46 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-20 11:19+0200\n"
+"PO-Revision-Date: 2022-05-20 11:30+0200\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.3\n"
+
+#: ffconversor:122
+msgid "Format not valid, valid types are:"
+msgstr "Format no vàlid, els tipus vàlids són:"
+
+#: ffconversor:124
+msgid "Format not specified"
+msgstr "Format no especificat"
+
+#: ffconversor:170
+msgid "Fail parsing file information"
+msgstr "Fallada llegint el fitxer d'informació"
+
+#: ffconversor:284 ffconversor:287
+msgid "Desired format?"
+msgstr "Format desitjat?"
+
+#: ffconversor:308
+msgid "Filename ?"
+msgstr "Nom de fitxer?"
+
+#: ffconversor:357
+msgid "Input file not specified"
+msgstr "Fitxer d'entrada no especificat"
+
+#: ffconversor:363
+msgid "No format specified and not output file with valid extension"
+msgstr "No especificat format i no especificat un fitxer d'eixida amb extensió vàlida"

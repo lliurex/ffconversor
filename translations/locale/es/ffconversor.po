@@ -1,0 +1,46 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-20 11:19+0200\n"
+"PO-Revision-Date: 2022-05-20 11:24+0200\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.3\n"
+
+#: ffconversor:122
+msgid "Format not valid, valid types are:"
+msgstr "Formato no válido, los tipos válidos son:"
+
+#: ffconversor:124
+msgid "Format not specified"
+msgstr "Formato no especificado"
+
+#: ffconversor:170
+msgid "Fail parsing file information"
+msgstr "Fallo leyendo el fichero de información"
+
+#: ffconversor:284 ffconversor:287
+msgid "Desired format?"
+msgstr "¿Formato deseado?"
+
+#: ffconversor:308
+msgid "Filename ?"
+msgstr "¿Nombre de fichero?"
+
+#: ffconversor:357
+msgid "Input file not specified"
+msgstr "Fichero de entrada no especificado"
+
+#: ffconversor:363
+msgid "No format specified and not output file with valid extension"
+msgstr "No especificado formato y no especificado un fichero de salida con extensión válida"
