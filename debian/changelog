@@ -1,3 +1,10 @@
+ffconversor (0.1.2) focal; urgency=medium
+
+  * Changed default outputpath suggestion
+  * Add translations es/ca
+
+ -- M.Angel Juan <m.angel.juan@gmail.com>  Fri, 20 May 2022 11:33:51 +0200
+
 ffconversor (0.1.1) focal; urgency=medium
 
   * Add h265 & fix vp9 settings
