@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-20 11:19+0200\n"
+"POT-Creation-Date: 2022-05-20 11:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ffconversor:109
+msgid "not exists"
+msgstr ""
 
 #: ffconversor:122
 msgid "Format not valid, valid types are:"
@@ -25,8 +29,20 @@ msgstr ""
 msgid "Format not specified"
 msgstr ""
 
+#: ffconversor:133
+msgid "Unknown parameter"
+msgstr ""
+
+#: ffconversor:142
+msgid "not found"
+msgstr ""
+
 #: ffconversor:170
 msgid "Fail parsing file information"
+msgstr ""
+
+#: ffconversor:188
+msgid "Converting"
 msgstr ""
 
 #: ffconversor:284 ffconversor:287

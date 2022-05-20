@@ -106,7 +106,7 @@ def parse_params():
                 output.setdefault('input',f)
                 nparam += 1
             else:
-                raise FileNotFoundError(f'{sys.argv[nparam+1]} {_("not exists")}')
+                raise FileNotFoundError('{} {}'.format(sys.argv[nparam+1],_("not exists")))
             continue
         if param == '-o':
             f=os.path.realpath(os.path.join(os.getcwd(),sys.argv[nparam+1]))
@@ -130,7 +130,7 @@ def parse_params():
         if param == '-g':
             output['kdemode'] = '1'
             continue
-        raise TypeError(f'Unknown parameter {param}')
+        raise TypeError('{} {}'.format(_("Unknown parameter"),param))
     return output
 
 def get_info(file):
@@ -139,7 +139,7 @@ def get_info(file):
         jinfo = json.loads(info)
         return jinfo
     else:
-        raise FileNotFoundError(f'{file} {_("not found")}')
+        raise FileNotFoundError('{} {}'.format(file,_("not found")))
 
 def parse_info(fileinfo):
     streams = []
@@ -185,7 +185,7 @@ port = random.randint(20000,65000)
 def start_listener(info,output):
     global port
     if kdemode and kdemode != '0':
-        service, path = subprocess.check_output(['kdialog','--progressbar',f'{_("Converting")} ... {os.path.basename(output)}', '100', '--title', os.path.basename(sys.argv[0])]).decode().strip().split(' ')
+        service, path = subprocess.check_output(['kdialog','--progressbar','{} ... {}'.format(_("Converting"),os.path.basename(output)), '100', '--title', os.path.basename(sys.argv[0])]).decode().strip().split(' ')
     udpserver = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     try:
         udpserver.bind(('127.0.0.1',port))

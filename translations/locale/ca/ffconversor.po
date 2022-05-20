@@ -7,15 +7,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-20 11:19+0200\n"
-"PO-Revision-Date: 2022-05-20 11:30+0200\n"
+"POT-Creation-Date: 2022-05-20 11:49+0200\n"
+"PO-Revision-Date: 2022-05-20 11:54+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "X-Generator: Poedit 2.3\n"
+
+#: ffconversor:109
+msgid "not exists"
+msgstr "no existeix"
 
 #: ffconversor:122
 msgid "Format not valid, valid types are:"
@@ -25,9 +29,21 @@ msgstr "Format no vàlid, els tipus vàlids són:"
 msgid "Format not specified"
 msgstr "Format no especificat"
 
+#: ffconversor:133
+msgid "Unknown parameter"
+msgstr "Paràmetre desconegut"
+
+#: ffconversor:142
+msgid "not found"
+msgstr "no trobat"
+
 #: ffconversor:170
 msgid "Fail parsing file information"
 msgstr "Fallada llegint el fitxer d'informació"
+
+#: ffconversor:188
+msgid "Converting"
+msgstr "Convertint"
 
 #: ffconversor:284 ffconversor:287
 msgid "Desired format?"
