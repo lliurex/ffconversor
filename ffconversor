@@ -10,6 +10,17 @@ import threading
 import time
 import signal
 import random
+import locale
+import gettext
+
+try:
+    translation = gettext.translation('ffconversor',localedir='/usr/share/locale')
+    if translation:
+        translation.install()
+        _ = translation.gettext
+except FileNotFoundError:
+    print('No translation found!')
+    _ = lambda x: x
 
 def einfo(func):
     @wraps(func)
@@ -95,7 +106,7 @@ def parse_params():
                 output.setdefault('input',f)
                 nparam += 1
             else:
-                raise FileNotFoundError(f'{sys.argv[nparam+1]} not exists')
+                raise FileNotFoundError(f'{sys.argv[nparam+1]} {_("not exists")}')
             continue
         if param == '-o':
             f=os.path.realpath(os.path.join(os.getcwd(),sys.argv[nparam+1]))
@@ -108,9 +119,9 @@ def parse_params():
                 if f in allowed_formats:
                     output.setdefault('format',f)
                 else:
-                    raise TypeError('Format not valid, valid types are:'+','.join(allowed_formats))
+                    raise TypeError(_('Format not valid, valid types are:')+','.join(allowed_formats))
             else:
-                raise TypeError('Format not specified')
+                raise TypeError(_('Format not specified'))
             nparam += 1
             continue
         if param == '-t':
@@ -128,7 +139,7 @@ def get_info(file):
         jinfo = json.loads(info)
         return jinfo
     else:
-        raise FileNotFoundError(f'{file} not found')
+        raise FileNotFoundError(f'{file} {_("not found")}')
 
 def parse_info(fileinfo):
     streams = []
@@ -156,7 +167,7 @@ def parse_info(fileinfo):
     output.setdefault('height',height)
     output.setdefault('length',length)
     if len(codecs) != len(types) and container:
-        raise TypeError('Fail parsing file information')
+        raise TypeError(_('Fail parsing file information'))
     for i in range(len(codecs)):
         output.setdefault(i,'{}/{}'.format(types[i],codecs[i]))
     output.setdefault('container',container)
@@ -174,7 +185,7 @@ port = random.randint(20000,65000)
 def start_listener(info,output):
     global port
     if kdemode and kdemode != '0':
-        service, path = subprocess.check_output(['kdialog','--progressbar',f'Converting ... {os.path.basename(output)}', '100', '--title', os.path.basename(sys.argv[0])]).decode().strip().split(' ')
+        service, path = subprocess.check_output(['kdialog','--progressbar',f'{_("Converting")} ... {os.path.basename(output)}', '100', '--title', os.path.basename(sys.argv[0])]).decode().strip().split(' ')
     udpserver = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     try:
         udpserver.bind(('127.0.0.1',port))
@@ -270,10 +281,10 @@ def ask():
     cmd=[]
     formats = sorted(list(profiles.keys()) + list(profile_alias.keys()))
     if kdemode and kdemode != '0':
-        cmd = ['kdialog','--combobox','Desired format?','--title',os.path.basename(sys.argv[0])]
+        cmd = ['kdialog','--combobox',_('Desired format?'),'--title',os.path.basename(sys.argv[0])]
         cmd.extend(formats)
     if textmode and textmode != '0':
-        cmd = ['dialog','--stdout','--menu','Desired format?','0','0','0']
+        cmd = ['dialog','--stdout','--menu',_('Desired format?'),'0','0','0']
         options = zip(formats,['']*len(formats))
         options = [ item for i in options for item in i ]
         cmd.extend(options)
@@ -290,11 +301,11 @@ def ask():
 
         outdir=None
         while not outdir or not os.path.isdir(outdir):
-            cmd = ['dialog','--stdout','--dselect',os.path.realpath('.'),str(sizes[0]),str(sizes[1])]
+            cmd = ['dialog','--stdout','--dselect',os.path.realpath(os.path.dirname(i)),str(sizes[0]),str(sizes[1])]
             outdir=subprocess.check_output(cmd,shell=False).decode().strip()
         filename=None
         while not filename or os.path.isfile(f'{outdir}/{filename}') or '/' in filename:
-            cmd = ['dialog','--stdout','--inputbox','Filename ?','0','0']
+            cmd = ['dialog','--stdout','--inputbox',_('Filename ?'),'0','0']
             name = os.path.basename(i).split('.')[:-1]
             name.append(f'.{f}')
             name = ''.join(name)
@@ -322,7 +333,7 @@ def ask():
         name = ''.join(name)
         name = os.path.basename(name)
         while not filename or os.path.isfile(filename):
-            cmd=['kdialog','--getsavefilename',f'{os.path.realpath(".")}/{name}',mimetype]
+            cmd=['kdialog','--getsavefilename',f'{os.path.realpath(os.path.dirname(i))}/{name}',mimetype]
             try:
                 filename=subprocess.check_output(cmd,shell=False).decode().strip()
             except Exception as e:
@@ -343,13 +354,13 @@ def main():
     if textmode and textmode != '0':
         signal.signal(signal.SIGINT,cancel_text)
     if not i:
-        raise FileNotFoundError('Input file not specified')
+        raise FileNotFoundError(_('Input file not specified'))
     if not f and not o:
         ask()
     if not f and o:
         f = os.path.basename(o).split('.')[-1]
         if f not in allowed_formats:
-            raise TypeError('No format specified and not output file with valid extension')
+            raise TypeError(_('No format specified and not output file with valid extension'))
     if not o and f:
         o = os.path.basename(i).split('.')[:-1]
         o.append(f'.{f}')
@@ -370,7 +381,7 @@ def main():
     if f in codec_alias.keys():
         f = codec_alias.get(f)
     if not profile:
-        raise TypeError(f'No profile for {format} type')
+        raise TypeError(f'{_("No profile for")} {format} {_("type")}')
     call_ffmpeg(i,o,f,profile)
     return 0
 
