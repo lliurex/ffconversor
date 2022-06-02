@@ -299,85 +299,90 @@ def call_ffmpeg(input,output,container,profile):
     ffmpeg.wait()
     end_server=True
 
-def ask():
+def ask(noformat=False,nooutput=False):
     global f,o,i
     cmd=[]
     formats = sorted(list(profiles.keys()) + list(profile_alias.keys()))
-    if kdemode and kdemode != '0':
-        cmd = ['kdialog','--combobox',_('Desired format?'),'--title',os.path.basename(sys.argv[0])]
-        cmd.extend(formats)
-    if textmode and textmode != '0':
-        cmd = ['dialog','--stdout','--menu',_('Desired format?'),'0','0','0']
-        options = zip(formats,['']*len(formats))
-        options = [ item for i in options for item in i ]
-        cmd.extend(options)
-    if cmd:
-        try:
-            f=subprocess.check_output(cmd,shell=False).decode().strip()
-        except:
-            f=None
-        finally:
-            if textmode and textmode != '0':
-                subprocess.check_call(['clear'],shell=False)
-        if not f:
-            sys.exit(0)
 
-    if textmode and textmode != '0':
-        sizes = subprocess.check_output(['stty','size'],shell=False).decode().strip()
-        sizes = [ int(x)-10 for x in sizes.split() ]
-        sizes = [ int(sizes[0]*2/3), int(sizes[1]/2) ]
-
-        outdir=None
-        while not outdir or not os.path.isdir(outdir):
-            cmd = ['dialog','--stdout','--dselect',os.path.realpath(os.path.dirname(i)),str(sizes[0]),str(sizes[1])]
+    if noformat == False:
+        if kdemode and kdemode != '0':
+            cmd = ['kdialog','--combobox',_('Desired format?'),'--title',os.path.basename(sys.argv[0])]
+            cmd.extend(formats)
+        if textmode and textmode != '0':
+            cmd = ['dialog','--stdout','--menu',_('Desired format?'),'0','0','0']
+            options = zip(formats,['']*len(formats))
+            options = [ item for i in options for item in i ]
+            cmd.extend(options)
+        if cmd:
             try:
-                outdir=subprocess.check_output(cmd,shell=False).decode().strip()
+                f=subprocess.check_output(cmd,shell=False).decode().strip()
             except:
-                outdir=None
+                f=None
             finally:
-                subprocess.check_call(['clear'],shell=False)
-        filename=None
-        while not filename or os.path.isfile(f'{outdir}/{filename}') or '/' in filename:
-            cmd = ['dialog','--stdout','--inputbox',_('Filename ?'),'0','0']
+                if textmode and textmode != '0':
+                    subprocess.check_call(['clear'],shell=False)
+            if not f:
+                sys.exit(0)
+
+    if nooutput == False:
+        if textmode and textmode != '0':
+            sizes = subprocess.check_output(['stty','size'],shell=False).decode().strip()
+            sizes = [ int(x)-10 for x in sizes.split() ]
+            sizes = [ int(sizes[0]*2/3), int(sizes[1]/2) ]
+
+            outdir=None
+            while not outdir or not os.path.isdir(outdir):
+                cmd = ['dialog','--stdout','--dselect',os.path.realpath(os.path.dirname(i)),str(sizes[0]),str(sizes[1])]
+                try:
+                    outdir=subprocess.check_output(cmd,shell=False).decode().strip()
+                except:
+                    outdir=None
+                finally:
+                    subprocess.check_call(['clear'],shell=False)
+            filename=None
+            while not filename or os.path.isfile(f'{outdir}/{filename}') or '/' in filename:
+                # text-mode does not allow overwrite
+                cmd = ['dialog','--stdout','--inputbox',_('Filename ?'),'0','0']
+                name = os.path.basename(i).split('.')[:-1]
+                name.append(f'.{f}')
+                name = ''.join(name)
+                name = os.path.basename(name)
+                cmd.append(name)
+                try:
+                    filename=subprocess.check_output(cmd,shell=False).decode().strip()
+                except:
+                    filename=None
+                    sys.exit(1)
+                finally:
+                    subprocess.check_call(['clear'],shell=False)
+            o = f'{outdir}/{filename}'
+        if kdemode and kdemode != '0':
+            mimes={}
+            with open('/etc/mime.types','r') as fp:
+                for x in fp.readlines():
+                    fields = x.strip().split()
+                    if len(fields) < 2 or fields[0][0] == '#':
+                        continue
+                    for y in fields[1:]:
+                        mimes.setdefault(y,fields[0])
+            ca = codec_alias.get(f)
+            if not ca:
+                mimetype=mimes.get(f)
+            else:
+                mimetype=mimes.get(ca)
+            filename = None
             name = os.path.basename(i).split('.')[:-1]
             name.append(f'.{f}')
             name = ''.join(name)
             name = os.path.basename(name)
-            cmd.append(name)
-            try:
-                filename=subprocess.check_output(cmd,shell=False).decode().strip()
-            except:
-                filename=None
-                sys.exit(1)
-            finally:
-                subprocess.check_call(['clear'],shell=False)
-        o = f'{outdir}/{filename}'
-    if kdemode and kdemode != '0':
-        mimes={}
-        with open('/etc/mime.types','r') as fp:
-            for x in fp.readlines():
-                fields = x.strip().split()
-                if len(fields) < 2 or fields[0][0] == '#':
-                    continue
-                for y in fields[1:]:
-                    mimes.setdefault(y,fields[0])
-        ca = codec_alias.get(f)
-        if not ca:
-            mimetype=mimes.get(f)
-        else:
-            mimetype=mimes.get(ca)
-        filename = None
-        name = os.path.basename(i).split('.')[:-1]
-        name.append(f'.{f}')
-        name = ''.join(name)
-        name = os.path.basename(name)
-        while not filename or os.path.isfile(filename):
+            # Allow overwrite
+            # while not filename or os.path.isfile(filename):
             cmd=['kdialog','--getsavefilename',f'{os.path.realpath(os.path.dirname(i))}/{name}',mimetype]
             try:
                 filename=subprocess.check_output(cmd,shell=False).decode().strip()
             except Exception as e:
                 sys.exit(0)
-        o = filename
+            o = filename
 
 # @einfo
 def main():
@@ -409,10 +414,11 @@ def main():
             sys.exit(1)
             raise TypeError(_('No format specified and not output file with valid extension'))
     if not o and f:
-        o = os.path.basename(i).split('.')[:-1]
-        o.append(f'.{f}')
-        o = ''.join(o)
-        o = f'{os.path.dirname(i)}/{o}'
+        ask(noformat=True)
+        # o = os.path.basename(i).split('.')[:-1]
+        # o.append(f'.{f}')
+        # o = ''.join(o)
+        # o = f'{os.path.dirname(i)}/{o}'
     if os.path.isdir(o) and f:
         newoutput = os.path.basename(i).split('.')[:-1]
         newoutput.append(f'.{f}')
