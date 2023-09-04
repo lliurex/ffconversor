@@ -1,3 +1,9 @@
+ffconversor (0.11.4) jammy; urgency=medium
+
+  * Initial release for jammy
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 04 Sep 2023 13:55:44 +0200
+
 ffconversor (0.1.4) focal; urgency=medium
 
   * Allow overwrite in kdemode
