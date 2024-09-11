@@ -1,3 +1,9 @@
+ffconversor (0.21.5) noble; urgency=medium
+
+  * Fixed ffconversor-kde-servicemenu debian install file
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 11 Sep 2024 11:38:24 +0200
+
 ffconversor (0.21.4) noble; urgency=medium
 
   * Initial release for noble
